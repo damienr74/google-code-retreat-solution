@@ -110,6 +110,6 @@ func main() {
 
 	for _, element := range licenceList {
 		matches := maskMatch(wordList, createMask(element))
-		fmt.Printf("%s\n", shortestWord(matches))
+		fmt.Printf("%s matches: %s\n", element, shortestWord(matches))
 	}
 }
