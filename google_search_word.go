@@ -9,6 +9,10 @@ import (
 	"strings"
 )
 
+/**
+ * Dawson Wilson Conceptualised the use of bits as the presence of a letter in
+ * a word. This makes for a simple, yet efficient implementation.
+ */
 type word struct {
 	str string
 	bit uint
