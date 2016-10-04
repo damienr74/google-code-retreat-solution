@@ -2,9 +2,9 @@ package main
 
 import (
 	"bufio"
-	"os"
-	"log"
 	"fmt"
+	"log"
+	"os"
 	"regexp"
 	"strings"
 )
@@ -20,6 +20,7 @@ type word struct {
 
 func createMask(str string) uint {
 	mask := 0
+
 	for i := 0; i < len(str); i++ {
 		offset := asciiVal(str[i])
 		mask |= 1 << offset
@@ -41,15 +42,17 @@ func asciiVal(char byte) uint {
 
 func initDict() []word {
 	file, err := os.Open("dict")
+
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	wordList := []word{}
 	scanner := bufio.NewScanner(file)
+
 	for scanner.Scan() {
 		line := strings.ToLower(scanner.Text())
-		wordList = append(wordList, word{ line, createMask(line)})
+		wordList = append(wordList, word{line, createMask(line)})
 	}
 
 	return wordList
@@ -60,8 +63,10 @@ func getLicences() []string {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	scanner := bufio.NewScanner(os.Stdin)
 	licenceList := []string{}
+
 	for scanner.Scan() {
 		licence := strings.ToLower(scanner.Text())
 		filter := reg.ReplaceAllString(licence, "")
@@ -73,8 +78,9 @@ func getLicences() []string {
 
 func maskMatch(wordList []word, searchMask uint) []string {
 	matchList := []string{}
+
 	for _, element := range wordList {
-		if element.bit & searchMask == searchMask {
+		if element.bit&searchMask == searchMask {
 			matchList = append(matchList, element.str)
 		}
 	}
@@ -86,7 +92,9 @@ func shortestWord(words []string) string {
 	if len(words) < 1 {
 		return ""
 	}
+
 	shortestWord := words[0]
+
 	for _, element := range words {
 		if len(shortestWord) > len(element) {
 			shortestWord = element
@@ -98,7 +106,6 @@ func shortestWord(words []string) string {
 
 func main() {
 	wordList := initDict()
-	fmt.Printf("Dictionary Initialized\n")
 	licenceList := getLicences()
 
 	for _, element := range licenceList {
