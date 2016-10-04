@@ -28,14 +28,19 @@ func createMask(str string) uint {
 }
 
 func asciiVal(char byte) uint {
-	if char < 96 || char > 122 {
-		return 0;
+	if char >= 65 && char < 90 {
+		return uint(char - 64)
 	}
-	return uint(char - 96)
+
+	if char > 96 || char < 123 {
+		return uint(char - 96)
+	}
+
+	return 0
 }
 
 func initDict() []word {
-	file, err := os.Open("dict2")
+	file, err := os.Open("dict")
 	if err != nil {
 		log.Fatal(err)
 	}
