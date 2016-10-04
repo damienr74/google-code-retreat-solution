@@ -31,7 +31,7 @@ func asciiVal(char byte) uint {
 }
 
 func initDict() []word {
-	file, err := os.Open("dict")
+	file, err := os.Open("dict2")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -40,7 +40,7 @@ func initDict() []word {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := strings.ToLower(scanner.Text())
-		wordList = append(wordList, word{ line, createMask(plain)})
+		wordList = append(wordList, word{ line, createMask(line)})
 	}
 
 	return wordList
@@ -91,7 +91,6 @@ func main() {
 	wordList := initDict()
 	fmt.Printf("Dictionary Initialized\n")
 	licenceList := getLicences()
-	fmt.Printf("Licences Read\n")
 
 	for _, element := range licenceList {
 		matches := maskMatch(wordList, createMask(element))
